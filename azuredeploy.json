@@ -48,7 +48,7 @@
             "metadata": {
                 "description": "Resource group name of the source storage account."
             },
-			"defaultValue": "WISE-PaaS_Marketplace_Deploy_VM_Template"
+			"defaultValue": ""
         },
         "sourceImageURI": {
             "type": "String",
