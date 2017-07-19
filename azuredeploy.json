@@ -420,7 +420,7 @@
                         "typeHandlerVersion": "1.4",
                         "settings": {
                             "fileUris": [
-                                "https://marketplacetemplate.blob.core.windows.net/rmm32-3-2-13/ImageTransfer.ps1"
+                                "https://marketplacetemplate.blob.core.windows.net/script/ImageTransfer.ps1"
                             ]
                         },
                         "protectedSettings": {
