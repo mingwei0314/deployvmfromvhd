@@ -2,21 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-		"SubscriptionId": {
-            "type": "String"
-        },
-		"ApplicationId": {
-            "type": "String"
-        },
-		"Password": {
-            "type": "String"
-        },
-		"TenantId": {
-            "type": "String"
-        },
-		"ResoureGroup": {
-            "type": "String"
-        },
         "transferVmName": {
             "defaultValue": "TransferVM",
             "minLength": 3,
@@ -27,7 +12,7 @@
             }
         },
         "vmSize": {
-            "defaultValue": "Standard_A2",
+            "defaultValue": "Standard_A3",
             "type": "String",
             "metadata": {
                 "description": "VM size of new virtual machine that will be deployed from a custom image."
@@ -88,7 +73,7 @@
         }
     },
     "variables": {
-		"vmNsgName": "rmm32Nsg",
+		"vmNsgName": "sampleNsg",
         "sourceStorageAccountName": "[substring(split(parameters('sourceImageURI'),'.')[0],8)]",
         "vmCount": 2,
         "vmNames": [
@@ -116,7 +101,7 @@
         "imagePublisher": "MicrosoftWindowsServer",
         "imageOffer": "WindowsServer",
         "osDiskName": "OSDisk",
-        "transferVmSize": "Standard_A1",
+        "transferVmSize": "Standard_D1",
         "vhdStorageAccountContainerName": "vhds",
         "sourcevhdStorageAccountContainerName": "vhds/Microsoft.Compute/Images/vhds",
         "customScriptFolder": "CustomScripts",
@@ -150,7 +135,7 @@
                         "properties": {
                             "protocol": "TCP",
                             "sourcePortRange": "*",
-                            "destinationPortRange": "5010-5014",
+                            "destinationPortRange": "5010",
                             "sourceAddressPrefix": "*",
                             "destinationAddressPrefix": "*",
                             "access": "Allow",
@@ -491,31 +476,6 @@
                     ]
                 }
             },
-            "resources": [
-                {
-                    "type": "extensions",
-                    "name": "[concat(variables('VMNames')[1],'CustomScriptExtension')]",
-                    "apiVersion": "2015-06-15",
-                    "location": "[resourceGroup().location]",
-                    "properties": {
-                        "publisher": "Microsoft.Compute",
-                        "type": "CustomScriptExtension",
-                        "autoUpgradeMinorVersion": true,
-                        "typeHandlerVersion": "1.4",
-                        "settings": {
-                            "fileUris": [
-                                "https://marketplacetemplate.blob.core.windows.net/script/DeletVM.ps1"
-                            ]
-                        },
-                        "protectedSettings": {
-                            "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ','DeletVM.ps1 -ApplicationId ',parameters('ApplicationId'),' -Password ', parameters('Password'), ' -ResoureGroup ', parameters('ResoureGroup'), ' -TenantId ', parameters('TenantId'), ' -SubscriptionId ', parameters('SubscriptionId'))]"
-                        }
-                    },
-                    "dependsOn": [
-                        "[concat('Microsoft.Compute/virtualMachines/', variables('vmNames')[1])]"
-                    ]
-                }
-            ],
             "dependsOn": [
                 "[concat('Microsoft.Storage/storageAccounts/', variables('StorageAccountName'))]",
                 "[concat('Microsoft.Network/networkInterfaces/', variables('vmNames')[1],'NIC')]",
