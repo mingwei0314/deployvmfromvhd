@@ -103,7 +103,7 @@
         "osDiskName": "OSDisk",
         "transferVmSize": "Standard_D1",
         "vhdStorageAccountContainerName": "vhds",
-        "sourcevhdStorageAccountContainerName": "vhds/Microsoft.Compute/Images/vhds",
+        "sourcevhdStorageAccountContainerName": "vhds",
         "customScriptFolder": "CustomScripts",
         "trfCustomScriptFiles": [
             "ImageTransfer.ps1"
